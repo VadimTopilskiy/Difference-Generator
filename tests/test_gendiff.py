@@ -1,5 +1,6 @@
 from tests import FIXTURES_DIR
-
+from gendiff import generate_diff
+from tests import FIXTURES_DIR
 
 def expected_str():
     with open(f'{FIXTURES_DIR}flat_output.txt') as f:
