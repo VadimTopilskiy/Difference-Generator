@@ -16,7 +16,7 @@ def _convert_string(string: str) -> str:
     return string
 
 
-def make_stylish(diff):
+def make_stylish(diff: dict) -> str:
     def walk(diff):
         result = {}
 
@@ -32,7 +32,13 @@ def make_stylish(diff):
                 result[f'+ {key}'] = value['added']
             elif 'removed' in value:
                 result[f'- {key}'] = value['removed']
-        return result
+            else:
+                action = value['action']
+                old = value['old_value'] if action == 'updated' else None
+                result.update(
+                    _make_dict(action, key, value['value'], old)
+                )
 
+        return result
     result = json.dumps(walk(diff), indent=4)
     return _convert_string(result)
